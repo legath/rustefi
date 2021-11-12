@@ -1,0 +1,12 @@
+[build]
+target = "armv7r-none-eabihf"
+
+[target.armv7r-none-eabihf]
+rustflags = [
+    "-C", "linker=arm-none-eabi-gcc",
+    "-C", "link-arg=-Trm46l852.ld",
+    "-C", "link-arg=-nostartfiles",
+    "-C", "link-arg=-mlittle-endian",
+    "-C", "target-cpu=cortex-r4f",
+    "-C", "target-feature=+hwdiv,+dsp"
+]
