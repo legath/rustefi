@@ -1,4 +1,4 @@
-[![CI](https://github.com/legath/rustefi/workflows/ci.yml/badge.svg?branch=master)](https://github.com/legath/rm46l852/actions/workflows/ci.yml)
+[![CI](https://github.com/legath/rustefi/workflows/ci.yml/badge.svg?branch=master)](https://github.com/legath/rustefi/actions/workflows/ci.yml)
 
 ## License
 
