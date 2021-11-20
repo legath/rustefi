@@ -1,0 +1,3 @@
+[submodule "crates/tms570"]
+	path = crates/tms570
+	url = git@github.com:legath/ti-hercules-bsp.git
