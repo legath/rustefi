@@ -1,3 +1,6 @@
 [submodule "crates/tms570"]
 	path = crates/tms570
 	url = git@github.com:legath/ti-hercules-bsp.git
+[submodule "crates/pid-loop"]
+	path = crates/pid-loop
+	url = git@github.com:legath/pid-loop.git
