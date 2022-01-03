@@ -16,6 +16,10 @@ use tms570::iomm::Iomm;
 use tms570::pinmux::PinMux;
 use linked_list_allocator::LockedHeap;
 use alloc::vec::Vec;
+use tms570::pwm::{Pwm, PwmId};
+use tms570::rti::RtiController;
+use tms570::syscounter::SysCounter;
+use tms570::system::Sys;
 
 pub mod lang_items;
 pub mod handlers;
@@ -48,16 +52,18 @@ fn main() {
         .tx_enable(true)
         .set_baudrate(115_200);
     uart.open();
-    uart.write(b"Rust fw started\r\n");
+
     ioport.direction(GioPorts::MibSpiPort3, 0, GioDirection::Input);
     ioport.direction(GioPorts::B, 1, GioDirection::Output);
 
+    let syscnt: RtiController = SysCounter::new(false);
+    syscnt.set_period(0,10000);
+    syscnt.start_counter(0);
 
     loop {
         let button = ioport.get(GioPorts::MibSpiPort3, 0);
         if !button {
             ioport.toogle(GioPorts::B, 1);
-
         }
     }
 }
