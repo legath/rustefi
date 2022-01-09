@@ -70,6 +70,7 @@ fn main() {
 
 #[lang = "oom"]
 #[no_mangle]
+#[allow(unused_unsafe)]
 pub fn rust_oom(_: core::alloc::Layout) -> ! {
     unsafe { core::intrinsics::abort() }
 }
