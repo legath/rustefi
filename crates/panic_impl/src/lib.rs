@@ -6,3 +6,6 @@
 pub extern "C" fn panic(_info: &core::panic::PanicInfo) -> ! {
     unsafe { core::intrinsics::abort() }
 }
+
+#[no_mangle]
+pub extern "C" fn __aeabi_unwind_cpp_pr0() { }
