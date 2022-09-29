@@ -29,7 +29,7 @@ static ALLOCATOR: LockedHeap = LockedHeap::empty();
 
 pub fn heap_init() {
     unsafe {
-        let start = tms570::heap_start() as usize;
+        let start = tms570::heap_start() as *mut u8;
         let size = tms570::heap_size() as usize;
         ALLOCATOR.lock().init(start, size);
     }
