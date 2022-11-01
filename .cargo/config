@@ -8,5 +8,5 @@ rustflags = [
     "-C", "link-arg=-nostartfiles",
     "-C", "link-arg=-mlittle-endian",
     "-C", "target-cpu=cortex-r4f",
-    "-C", "target-feature=+hwdiv,+dsp"
+    "-C", "target-feature=+dsp"
 ]
