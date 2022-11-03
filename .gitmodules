@@ -4,3 +4,6 @@
 [submodule "crates/pid-loop"]
 	path = crates/pid-loop
 	url = git@github.com:legath/pid-loop.git
+[submodule "crates/canopen_node/src/canopennode"]
+	path = crates/canopen_node/src/canopennode
+	url = git@github.com:CANopenNode/CANopenNode.git
