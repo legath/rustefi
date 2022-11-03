@@ -3,7 +3,7 @@
 #![feature(lang_items)]
 #![feature(naked_functions)]
 #![feature(allocator_api)]
-
+#![feature(alloc_error_handler)]
 extern crate panic_impl;
 extern crate tms570;
 extern crate alloc;
@@ -68,7 +68,7 @@ fn main() {
     }
 }
 
-#[lang = "oom"]
+#[alloc_error_handler]
 #[no_mangle]
 #[allow(unused_unsafe)]
 pub fn rust_oom(_: core::alloc::Layout) -> ! {
