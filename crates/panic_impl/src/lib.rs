@@ -4,12 +4,12 @@
 #[cfg(not(test))]
 #[panic_handler]
 pub extern "C" fn panic(_info: &core::panic::PanicInfo) -> ! {
-    unsafe {
+    //unsafe {
         //core::intrinsics::abort()
         loop {
 
         }
-    }
+    //}
 }
 
 #[no_mangle]

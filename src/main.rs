@@ -8,6 +8,9 @@ extern crate panic_impl;
 extern crate tms570;
 extern crate alloc;
 extern crate linked_list_allocator;
+extern crate cortexr4;
+extern crate rtt_target;
+extern crate ufmt;
 
 use tms570::serial::{SerialLine, Parity, StopBits, DataBits, Lines, event};
 use tms570::scilin::SciChipset;
@@ -23,6 +26,10 @@ use tms570::rti::RtiController;
 use tms570::syscounter::SysCounter;
 use tms570::vim::{Vim, VimType};
 //use tms570::system::Sys;
+
+use cortexr4::asm::{nop, wfi};
+use rtt_target::{rtt_init, ChannelMode};
+use ufmt::uwriteln;
 
 pub mod lang_items;
 pub mod handlers;
@@ -50,11 +57,30 @@ fn main() {
     }
 
     heap_init();
+    let channels = rtt_init! {
+     up: {
+         0: {
+             size: 1024
+             name: "Terminal"
+         }
+     }
+     down: {
+         0: {
+             size: 16
+             name: "Terminal"
+         }
+     }
+ };
 
+    let mut output = channels.up.0;
+    output.set_mode(ChannelMode::BlockIfFull);
+    uwriteln!(output.u(), "Hello from RM46L852 ").ok();
+    uwriteln!(output.u(), "More logs for God of Logs!!").ok();
+    uwriteln!(output.u(), "last commit {}", env!("GIT_HASH") ).ok();
     /*unsafe {
         let vim = Vim::new();
-        vim.isr_set(10, test_isr);
-        vim.set_type(10, VimType::SysInterrupt);
+        vim.isr_set(64, test_isr);
+        vim.set_type(64, VimType::SysInterrupt);
         vim.interrupt_enable(10,true);
     }*/
     let ioport = Gio::new();
@@ -66,7 +92,7 @@ fn main() {
         .set_baudrate(9600);
     //uart.interrupt(event::RX_INT);
     uart.open();
-    uart.write(b"Test\n");
+    uart.write(b"Test");
 
     ioport.direction(GioPorts::MibSpiPort3, 0, GioDirection::Input);
     ioport.direction(GioPorts::B, 1, GioDirection::Output);
@@ -78,6 +104,7 @@ fn main() {
     loop {
         let button = ioport.get(GioPorts::MibSpiPort3, 0);
         if !button {
+            uwriteln!(output.u(), "button pressed ").ok();
             ioport.toogle(GioPorts::B, 1);
         }
     }
